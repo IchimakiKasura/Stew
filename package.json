@@ -1,0 +1,26 @@
+{
+  "name": "consultation-website",
+  "version": "1.0",
+  "main": "build/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "build:dev": "tsc && node . --dev",
+    "build:prod": "tsc && node . --prod",
+    "build:test": "tsc && node . --test",
+    "build:ts": "tsc",
+    "ts:watch": "esbuild ts/*.ts --outdir=src/js --watch --log-level=silent",
+    "wrangler:dev": "npx wrangler dev --local --live-reload",
+    "test:ts": "npx tsc --noEmit --pretty false --diagnostics --extendedDiagnostics --listFiles --explainFiles --traceResolution 2>&1 | grep -v \"node_modules\"",
+    "test:site": "concurrently --kill-others --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:dev\""
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "concurrently": "^10.0.3",
+    "dotenv": "^17.4.2",
+    "esbuild": "^0.28.1",
+    "fs-extra": "^11.3.5",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.48.0",
+    "typescript": "^6.0.3"
+  }
+}
