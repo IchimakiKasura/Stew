@@ -7,8 +7,6 @@
 
 dist
 node_modules
-staticEnv.js
-message.html
 
 # removed as it can be build later on
 src/js/*.js
