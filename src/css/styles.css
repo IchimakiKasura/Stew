@@ -17,6 +17,36 @@
     padding: 0;
 }
 
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: var(--bg-primary);
+    border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 4px;
+    min-height: 30px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #4e3f35;
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: #4e3f35;
+}
+
+*::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--bg-dark);
@@ -24,6 +54,7 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     padding-bottom: 80px;
+    scroll-behavior: smooth;
 }
 
 /* Navbar Layout */
@@ -66,7 +97,7 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     max-width: 1200px;
-    margin: 60px auto;
+    margin: 50px auto;
     padding: 0 40px;
     align-items: center;
 }
@@ -150,6 +181,21 @@ body {
 
 .btn-primary:active { transform: translateY(0); }
 
+.copy-cmd {
+    color: white;
+    font-family: SFMono-Regular,Consolas,monospace;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-size: .9rem;
+    cursor: pointer
+}
+
+.copy-cmd:hover {
+    border-color: var(--text-muted)
+}
+
 .terminal-window {
     background-color: var(--bg-terminal);
     border: 1px solid var(--border);
@@ -196,6 +242,7 @@ body {
     font-size: 0.85rem;
     overflow-y: auto;
     flex-grow: 1;
+    transition: all 0.2s ease;
 }
 
 .log-line {
@@ -204,8 +251,11 @@ body {
 }
 
 .text-muted { color: var(--text-muted); }
-.text-orange { color: var(--primary); }
-.text-teal { color: var(--accent); }
+.text-orange { color: orange; }
+.text-teal { color: teal; }
+.text-white { color: white; }
+.text-green { color: green; }
+.text-yellow { color: yellow; }
 
 .features-grid {
     display: grid;
@@ -221,15 +271,16 @@ body {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 30px;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .card:hover {
     border-color: rgba(0, 255, 204, 0.3);
+    transform: scale(1.1);
 }
 
 .card-icon {
-    font-size: 1.8rem;
+    font-size: 5rem;
     margin-bottom: 16px;
 }
 

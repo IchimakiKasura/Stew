@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import * as htmlMinifier from "html-minifier-terser";
-import config, { isProd, isTest } from "../config.js";
+import config, { isProd, isTest, dotdir } from "../config.js";
 import log from "../console.js"
 
 function rewriteHTML(html, rel) {
@@ -14,15 +14,23 @@ function rewriteHTML(html, rel) {
         return `${a}${file}.min.js${b}`;
     });
 
-    if (!isProd || !isTest) return html;
-
-    // removes stylesheets, bundle
-    html = html.replace(/<link[^>]*href=["'][^"']+\.css["'][^>]*>\s*/g, "");
-    html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
-    log(rel, `css bundle linked`);
+    if (isProd || isTest) {
+        // removes stylesheets, bundle
+        html = html.replace(/<link[^>]*href=["'][^"']+\.css["'][^>]*>\s*/g, "");
+        html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
+        log(rel, `css bundle linked`);
     
-    // run custom replace for dev
-    // html = html.replace(/* regex */, /* replace */);
+        // run custom replace for dev
+        // html = html.replace(/* regex */, /* replace */);
+    }
+
+    // for dotdir option, changes "/" to "./" for relative dir
+    // (enable this if your site is under another uri and not on root)
+    if(dotdir) {
+        html = html.replace(/((?:href|src)=["']|url\["']?)(?!https?:|\/\/|#|mailto:|tel:|data:)\/?\/?/g, "$1./");
+        log(rel, `relative index fixed`);
+    }
+    
 
     return html;
 }

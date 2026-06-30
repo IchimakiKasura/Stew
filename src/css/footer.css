@@ -1,31 +1,39 @@
 footer {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     text-align: center;
-    padding: 60px 20px 20px;
-    margin-top: 80px;
+    padding-top: 50px;
+    margin-top: 50px;
     border-top: 1px solid var(--border);
     color: var(--text-muted);
     font-size: 0.9rem;
 }
 
-footer svg {
-    margin: 0 8px;
+.footer-left {
+    display: flex;
+}
+
+.footer-left svg {
+    margin: -5px 8px;
     cursor: pointer;
     transition: transform 0.2s ease, fill 0.2s ease;
     opacity: 0.8;
 }
 
-footer svg:hover {
+.footer-left svg:hover {
     transform: translateY(-3px);
     fill: var(--primary);
     opacity: 1;
 }
 
-footer a {
+.footer-right a {
     color: var(--text-muted);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-footer a:hover {
+.footer-right a:hover {
     color: var(--accent);
 }

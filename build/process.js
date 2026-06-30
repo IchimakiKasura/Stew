@@ -11,6 +11,8 @@ async function proc(inputFile) {
     const rel = path.relative(SRC, inputFile);
     let out = path.join(DIST, rel);
 
+    if(inputFile.endsWith(".nofile")) return;
+
     if (inputFile.endsWith(".js")) {
         await doWorkJS(inputFile, rel, out);
         return;

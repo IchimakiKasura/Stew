@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import path from "node:path";
-import config, { SRC, DIST, isProd, isDev, isTest } from "./config.js";
+import config, { SRC, DIST, isProd, isDev, isTest, dotdir } from "./config.js";
 import bundleCSS from "./work/bundleCSS.js";
 import proc from "./process.js";
 import log from "./console.js"
@@ -27,7 +27,7 @@ async function navigate(dir) {
         log(null, `Test Building, NO OUTPUTS WILL BE BUILT! ASSETS WILL BE SKIPPED!`);
     }
     else {
-        log(`null, No chosen option: '--dev', '--prod', '--test'`);
+        log(null, `No chosen option: '--dev', '--prod', '--test'`);
         return;
     }
 

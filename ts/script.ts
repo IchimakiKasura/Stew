@@ -1,28 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cookBtn = document.getElementById("cook-btn") as HTMLButtonElement | null;
     const terminalLog = document.getElementById("terminal-log") as HTMLElement | null;
+    const copyText = document.getElementById("copy-text");
 
-    if (!cookBtn || !terminalLog) return;
+    if (!cookBtn || !terminalLog || !copyText)  return;
+
+    copyText.addEventListener("click", () => {
+        navigator.clipboard.writeText("git clone https://github.com/IchimakiKasura/Stew");
+        const e = copyText.innerText;
+        copyText.innerText = "📋 Copied repo link!",
+        copyText.style.borderColor = "#00ffcc",
+        setTimeout( () => {
+            copyText.innerText = e,
+            copyText.style.borderColor = ""
+        }
+        , 2e3)
+    });
 
     interface BuildStep {
         prefixText: string;
-        prefixClass: "text-orange" | "text-teal";
+        prefixClass: "text-yellow" | "text-green" | "text-orange" | "text-teal" | "text-white";
         logText: string;
     }
 
     const steps: BuildStep[] = [
-        { prefixText: "[SYSTEM]", prefixClass: "text-orange", logText: " Build start" },
-        { prefixText: "[SYSTEM]", prefixClass: "text-orange", logText: " Removing old files from dist/" },
-        { prefixText: "[JavaScript]", prefixClass: "text-orange", logText: " script.js -> Stripping development blocks..." },
-        { prefixText: "[JavaScript]", prefixClass: "text-orange", logText: " script.js -> Remapping dynamic paths to .min.js..." },
-        { prefixText: "[JavaScript]", prefixClass: "text-orange", logText: " script.js -> Minified via Terser ✅" },
+        { prefixText: ">", prefixClass: "text-white", logText: " StewJS@1.0 build:prod" },
+        { prefixText: "[SYSTEM]", prefixClass: "text-white", logText: " Build start" },
+        { prefixText: "[SYSTEM]", prefixClass: "text-white", logText: " Removing old files from dist/" },
+        { prefixText: "[JavaScript]", prefixClass: "text-yellow", logText: " script.js -> Stripping development blocks..." },
+        { prefixText: "[JavaScript]", prefixClass: "text-yellow", logText: " script.js -> Remapping dynamic paths to .min.js..." },
+        { prefixText: "[JavaScript]", prefixClass: "text-yellow", logText: " script.js -> Minified via Terser ✅" },
         { prefixText: "[Cascading Style Sheet]", prefixClass: "text-teal", logText: " Parsing component folder assets..." },
         { prefixText: "[Cascading Style Sheet]", prefixClass: "text-teal", logText: " style.css bundle compiled via CleanCSS ✅" },
         { prefixText: "[Hyper Text Markup Language]", prefixClass: "text-orange", logText: " index.html -> Swapping development markers..." },
         { prefixText: "[Hyper Text Markup Language]", prefixClass: "text-orange", logText: " index.html -> Linked /css/bundle.min.css" },
-        { prefixText: "[ASSETS]", prefixClass: "text-orange", logText: " picture.webp -> copied to dist" },
-        { prefixText: "[ASSETS]", prefixClass: "text-orange", logText: " icon.ico -> copied to dist" },
-        { prefixText: "[SYSTEM]", prefixClass: "text-orange", logText: " Build Done! (took 4.12ms 🎉)" }
+        { prefixText: "[ASSETS]", prefixClass: "text-green", logText: " picture.webp -> copied to dist" },
+        { prefixText: "[ASSETS]", prefixClass: "text-green", logText: " icon.ico -> copied to dist" },
+        { prefixText: "[SYSTEM]", prefixClass: "text-white", logText: " Build Done! (took 4.67ms 🎉)" }
     ];
 
     let cooking = false;

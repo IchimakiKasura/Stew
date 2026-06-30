@@ -12,6 +12,7 @@ export const DIST = path.join(rootDir, "dist");
 export const isTest = process.argv[2] === "--test";
 export const isDev = process.argv[2] === "--dev";
 export const isProd = process.argv[2] === "--prod";
+export const dotdir = process.argv[3] === "--dotdir";
 
 export let errorCode = 0;
 
@@ -21,5 +22,6 @@ export default {
     isTest,
     isDev,
     isProd,
-    errorCode
+    errorCode,
+    dotdir
 };
