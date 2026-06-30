@@ -172,6 +172,7 @@ body {
     background-color: var(--primary);
     color: #fff;
     box-shadow: 0 4px 20px var(--primary-glow);
+    text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -293,4 +294,32 @@ body {
 .card p {
     color: var(--text-muted);
     font-size: 0.95rem;
+}
+
+.error-hero {
+    min-height: 70vh;
+}
+
+.text-red {
+    color: #ff5f56;
+    font-weight: bold;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background-color: var(--accent);
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.error-page .logo {
+    text-decoration: none;
+    color: var(--text-main);
 }

@@ -6,6 +6,7 @@
   "scripts": {
     "build:dev": "tsc && node . --dev",
     "build:prod": "tsc && node . --prod",
+    "build:prod-static": "tsc && node . --prod --dotdir",
     "build:test": "tsc && node . --test",
     "build:ts": "tsc",
     "ts:watch": "esbuild ts/*.ts --outdir=src/js --watch --log-level=silent",

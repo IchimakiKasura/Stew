@@ -1,8 +1,14 @@
-# 🍲 STEW Starter
+<div align=center>
+
+<img src="./docs/stew.png" height=150px>
+
+# STEW Starter
 
 A minimal, high-performance project template built on my **STEW** stack.
 
 I purpose-built this template for developers who want to stick to raw HTML and CSS, backed by the reliability of type-safe JavaScript, without dealing with complex frameworks or bloated tooling. 
+
+</div>
 
 ✨ **Live Landing Page:** Check out the interactive demo page at [ichimakikasura.github.io/Stew/](https://ichimakikasura.github.io/Stew/)
 
