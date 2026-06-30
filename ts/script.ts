@@ -1,21 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cookBtn = document.getElementById("cook-btn") as HTMLButtonElement | null;
     const terminalLog = document.getElementById("terminal-log") as HTMLElement | null;
-    const copyText = document.getElementById("copy-text") as HTMLElement | null;
 
-    if (!cookBtn || !terminalLog || !copyText) return;
-
-    copyText.addEventListener("click", () => {
-        navigator.clipboard.writeText("git clone https://github.com");
-        const originalText = copyText.innerText;
-        copyText.innerText = "📋 Copied repo link!";
-        copyText.style.borderColor = "#00ffcc";
-        
-        setTimeout(() => {
-            copyText.innerText = originalText;
-            copyText.style.borderColor = "";
-        }, 2000);
-    });
+    if (!cookBtn || !terminalLog) return;
 
     interface BuildStep {
         prefixText: string;

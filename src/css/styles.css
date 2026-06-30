@@ -4,9 +4,9 @@
     --bg-terminal: #07090d;
     --text-main: #f0f3f6;
     --text-muted: #8b949e;
-    --primary: #ff6600; /* Warm Hot-Pot Orange */
+    --primary: #ff6600;
     --primary-glow: rgba(255, 102, 0, 0.15);
-    --accent: #00ffcc; /* Clean Cyberspace Teal */
+    --accent: #00ffcc;
     --border: #21262d;
     --radius: 12px;
 }
@@ -150,21 +150,6 @@ body {
 
 .btn-primary:active { transform: translateY(0); }
 
-.copy-cmd {
-    font-family: "SFMono-Regular", Consolas, monospace;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 12px 20px;
-    border-radius: var(--radius);
-    font-size: 0.9rem;
-    cursor: pointer;
-}
-
-.copy-cmd:hover {
-    border-color: var(--text-muted);
-}
-
-/* Interactive Build Terminal Terminal */
 .terminal-window {
     background-color: var(--bg-terminal);
     border: 1px solid var(--border);
@@ -222,7 +207,6 @@ body {
 .text-orange { color: var(--primary); }
 .text-teal { color: var(--accent); }
 
-/* Features Section */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
