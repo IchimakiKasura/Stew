@@ -5,6 +5,7 @@ import { SRC, DIST, isProd, isTest } from "./config.js";
 import doWorkJS from "./work/javascript.js";
 import doWorkCSS from "./work/css.js";
 import doWorkHTML from "./work/html.js";
+import log from "./console.js"
 
 async function proc(inputFile) {
     const rel = path.relative(SRC, inputFile);
@@ -30,7 +31,7 @@ async function proc(inputFile) {
     const start = performance.now();
     await fs.copy(inputFile, out);
     const time = performance.now() - start;
-    console.log(`\x1b[32m[ASSETS]\x1b[0m ${rel} -> copied to dist (took ${time.toFixed(2)}ms ✅)`);
+    log(rel, `copied to dist (took ${time.toFixed(2)}ms ✅)`);
 }
 
 export default proc;

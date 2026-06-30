@@ -3,6 +3,7 @@ import path from "node:path";
 import config, { SRC, DIST, isProd, isDev, isTest } from "./config.js";
 import bundleCSS from "./work/bundleCSS.js";
 import proc from "./process.js";
+import log from "./console.js"
 
 async function navigate(dir) {
     for (const f of await fs.readdir(dir)) {
@@ -19,34 +20,33 @@ async function navigate(dir) {
 (async () => {
     const start = performance.now();
     if (isProd)
-        console.log(`[SYSTEM] Building live production files`);
+        log(null, `Building live production files`);
     else if (isDev) 
-        console.log(`[SYSTEM] Building development production files`);
+        log(null, `Building development production files`);
     else if (isTest) {
-        console.log(`[SYSTEM] Test Building, NO OUTPUTS WILL BE BUILT! ASSETS WILL BE SKIPPED!`);
+        log(null, `Test Building, NO OUTPUTS WILL BE BUILT! ASSETS WILL BE SKIPPED!`);
     }
     else {
-        console.log(`[SYSTEM] No chosen option: '--dev', '--prod', '--test'`);
+        log(`null, No chosen option: '--dev', '--prod', '--test'`);
         return;
     }
 
-    console.log(`[SYSTEM] Build start`);
+    log(null, `Build start`);
 
     if (!isTest) {
-        console.log(`[SYSTEM] Removing files`);
+        log(null, `Removing files`);
         await fs.remove(DIST);
         await fs.ensureDir(DIST);
     }
 
     if (isProd || isTest) {
-      console.log(`[SYSTEM] Bundling CSS Files`);
+      log(null, `Bundling CSS Files`);
       await bundleCSS();
     }
 
     await navigate(SRC);
     const end = performance.now() - start;
-    console.log(`[SYSTEM] Build ${config.errorCode === 0 ? "Done!" : "Failed"} (took ${end.toFixed(2)}ms ${config.errorCode === 0 ? "✅" : "❌"})`);
+    log(null, `Build ${config.errorCode === 0 ? "Done!" : "Failed"} (took ${end.toFixed(2)}ms ${config.errorCode === 0 ? "✅" : "❌"})`);
     
-    // Fixed: process.exitCode is a property, not a function
     process.exitCode = config.errorCode;
 })();

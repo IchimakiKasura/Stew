@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const steps: BuildStep[] = [
         { prefixText: "[SYSTEM]", prefixClass: "text-orange", logText: " Build start" },
         { prefixText: "[SYSTEM]", prefixClass: "text-orange", logText: " Removing old files from dist/" },
-        { prefixText: "[TypeScript]", prefixClass: "text-teal", logText: " Compiles source ts down to ESModules..." },
         { prefixText: "[JavaScript]", prefixClass: "text-orange", logText: " script.js -> Stripping development blocks..." },
         { prefixText: "[JavaScript]", prefixClass: "text-orange", logText: " script.js -> Remapping dynamic paths to .min.js..." },
         { prefixText: "[JavaScript]", prefixClass: "text-orange", logText: " script.js -> Minified via Terser ✅" },
@@ -21,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
         { prefixText: "[Cascading Style Sheet]", prefixClass: "text-teal", logText: " style.css bundle compiled via CleanCSS ✅" },
         { prefixText: "[Hyper Text Markup Language]", prefixClass: "text-orange", logText: " index.html -> Swapping development markers..." },
         { prefixText: "[Hyper Text Markup Language]", prefixClass: "text-orange", logText: " index.html -> Linked /css/bundle.min.css" },
+        { prefixText: "[ASSETS]", prefixClass: "text-orange", logText: " picture.webp -> copied to dist" },
+        { prefixText: "[ASSETS]", prefixClass: "text-orange", logText: " icon.ico -> copied to dist" },
         { prefixText: "[SYSTEM]", prefixClass: "text-orange", logText: " Build Done! (took 4.12ms 🎉)" }
     ];
 

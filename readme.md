@@ -1,4 +1,4 @@
-# 🍲 STEW Stack Starter
+# 🍲 STEW Starter
 
 A minimal, high-performance project template built on my **STEW** stack.
 
@@ -26,14 +26,8 @@ I purpose-built this template for developers who want to stick to raw HTML and C
 ```text
 ├── build/              # Custom ESM compiler and bundler
 ├── src/                # Entry point & Static Assets
-│   ├── index.html      
-│   ├── css/            # Raw Styling
-│   │    └── style.css   
-│   ├── js/             # Managed by my tsconfig
-│   ├── img/            # Image assets
 │   └── wrangler.jsonc  # Edge deployment configuration
 ├── ts/                 # Client side TypeScript logic
-│   └── script.ts       
 ├── worker/             # Backend stuff / Edge API
 │   ├── localworker.js  # For Development/Tests
 │   └── worker.js       # For production/live
