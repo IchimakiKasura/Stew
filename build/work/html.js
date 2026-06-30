@@ -16,7 +16,7 @@ function rewriteHTML(html, rel) {
 
     if (isProd || isTest) {
         // removes stylesheets, bundle
-        html = html.replace(/<link[^>]*href=["'][^"']+\.css["'][^>]*>\s*/g, "");
+        html = html.replace(/<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g, "");
         html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
         log(rel, `css bundle linked`);
     

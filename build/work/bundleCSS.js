@@ -24,7 +24,7 @@ async function bundleCSS() {
         log('bundle.css', `Minifying (bundle.min.css)`);
         bundle = new CleanCSS({}).minify(bundle).styles;
         if (!isTest) await fs.outputFile(bundleDir, bundle);
-        const end = performance.now() - start; // Fixed: Now correctly calculates total duration
+        const end = performance.now() - start;
         log(`bundle.min.css`, `${isTest ? "FINISHED" : "copied to dist"} (took ${end.toFixed(2)}ms ✅)`);
     } catch (err) {
         config.errorCode = 1;

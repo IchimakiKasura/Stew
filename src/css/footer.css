@@ -27,13 +27,3 @@ footer {
     fill: var(--primary);
     opacity: 1;
 }
-
-.footer-right a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footer-right a:hover {
-    color: var(--accent);
-}
