@@ -4,8 +4,9 @@ A minimal, high-performance project template built on my **STEW** stack.
 
 I purpose-built this template for developers who want to stick to raw HTML and CSS, backed by the reliability of type-safe JavaScript, without dealing with complex frameworks or bloated tooling. 
 
-> 🖕 **"Use Vite," they say.** 
-> This is a custom compiler built entirely on my own preferences. It works exactly how I like to build, skipping the heavy setup and keeping things brutally fast. Feel free to tweak it, tear it apart, or modify it your own way.
+✨ **Live Landing Page:** Check out the interactive demo page at [ichimakikasura.github.io/Stew/](https://ichimakikasura.github.io/Stew/)
+
+> 💡 **Note:** This stack is built entirely on my own preferences. It works exactly how I like to build, skipping the heavy setup and keeping things brutally fast. Feel free to tweak it, tear it apart, or modify it your own way.
 > 
 > 🛑 **Contributions:** No pull requests or issues will be accepted. As I mentioned above, if you want changes, you can fork it and modify it your own way.
 
@@ -55,7 +56,7 @@ My compiler cleans out development flags, handles path mapping on the fly, and s
 *   **Assets:** Copies images and raw unhandled files directly into `dist/`.
 
 ### 🔵 Live Production Build (`npm run build:prod`)
-Runs the same deep optimization process as the development build, with one major performance upgrade for the layout:
+Runs the same deep optimization process as the development build, with one major performance upgrade for the layout (as implemented on [ichiprototech.com](https://ichiprototech.com)):
 *   **CSS Bundling:** Instead of copying individual stylesheets, it reads the entire `src/css/` directory, concatenates every file into a unified stream, pushes it through CleanCSS, and serves a single optimized `/css/bundle.min.css`.
 *   **HTML Refactoring:** Automatically strips out individual `<link>` declarations via regex and hot-plugs a single, deferred bundle tag directly into the document `</head>`.
 
