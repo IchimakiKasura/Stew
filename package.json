@@ -2,7 +2,7 @@
   "name": "consultation-website",
   "version": "1.0",
   "main": "build/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "build:dev": "tsc && node . --dev",
     "build:prod": "tsc && node . --prod",

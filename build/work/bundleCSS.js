@@ -1,9 +1,7 @@
-const fs = require("fs-extra");
-const path = require("path");
-const CleanCSS = require("clean-css");
-
-const { SRC, DIST, isTest } = require("../config");
-const config = require("../config"); // only used for errorCode variable
+import fs from "fs-extra";
+import path from "node:path";
+import CleanCSS from "clean-css";
+import config, { SRC, DIST, isTest } from "../config.js";
 
 async function bundleCSS() {
     const start = performance.now();
@@ -15,22 +13,22 @@ async function bundleCSS() {
     for (const file of await fs.readdir(cssDir)) {
         if (!file.endsWith(".css")) continue;
 
-        console.log(`\x1b[36m[${isTest?"TEST:":""}Cascading Style Sheet]\x1b[0m ${file} -> Bundling file`);
+        console.log(`\x1b[36m[${isTest ? "TEST:" : ""}Cascading Style Sheet]\x1b[0m ${file} -> Bundling file`);
         bundle += await fs.readFile(path.join(cssDir, file), "utf8");
 
         bundle += "\n";
     }
 
     try {
-        console.log(`\x1b[36m[${isTest?"TEST:":""}Cascading Style Sheet]\x1b[0m bundle.css -> Minifying (bundle.min.css)`);
+        console.log(`\x1b[36m[${isTest ? "TEST:" : ""}Cascading Style Sheet]\x1b[0m bundle.css -> Minifying (bundle.min.css)`);
         bundle = new CleanCSS({}).minify(bundle).styles;
-        if(!isTest) await fs.outputFile(bundleDir, bundle);
-        const end = performance.now();
-        console.log(`\x1b[36m[${isTest?"TEST:":""}Cascading Style Sheet]\x1b[0m bundle.min.css -> ${isTest?"FINISHED":"copied to dist"} (took ${end.toFixed(2)}ms ✅)`);
-    } catch(err) {
+        if (!isTest) await fs.outputFile(bundleDir, bundle);
+        const end = performance.now() - start; // Fixed: Now correctly calculates total duration
+        console.log(`\x1b[36m[${isTest ? "TEST:" : ""}Cascading Style Sheet]\x1b[0m bundle.min.css -> ${isTest ? "FINISHED" : "copied to dist"} (took ${end.toFixed(2)}ms ✅)`);
+    } catch (err) {
         config.errorCode = 1;
-        console.log(`\x1b[36m[${isTest?"TEST:":""}Cascading Style Sheet]\x1b[0m bundle.min.css -> Failed ❌ [${err}]`);
+        console.log(`\x1b[36m[${isTest ? "TEST:" : ""}Cascading Style Sheet]\x1b[0m bundle.min.css -> Failed ❌ [${err}]`);
     }
 }
 
-module.exports = bundleCSS;
+export default bundleCSS;

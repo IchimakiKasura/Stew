@@ -1,10 +1,10 @@
-const fs = require("fs-extra");
-const path = require("path");
+import fs from "fs-extra";
+import path from "node:path";
 
-const { SRC, DIST, isProd, isTest } = require("./config");
-const doWorkJS = require("./work/javascript");
-const doWorkCSS = require("./work/css");
-const doWorkHTML = require("./work/html");
+import { SRC, DIST, isProd, isTest } from "./config.js";
+import doWorkJS from "./work/javascript.js";
+import doWorkCSS from "./work/css.js";
+import doWorkHTML from "./work/html.js";
 
 async function proc(inputFile) {
     const rel = path.relative(SRC, inputFile);
@@ -17,7 +17,7 @@ async function proc(inputFile) {
 
     if (inputFile.endsWith(".css")) {
         if (isProd || isTest) return;
-        await dowWorkCSS(inputFile, rel, out);
+        await doWorkCSS(inputFile, rel, out);
         return;
     }
 
@@ -26,11 +26,11 @@ async function proc(inputFile) {
         return;
     }
 
-    if(isTest) return;
+    if (isTest) return;
     const start = performance.now();
     await fs.copy(inputFile, out);
     const time = performance.now() - start;
     console.log(`\x1b[32m[ASSETS]\x1b[0m ${rel} -> copied to dist (took ${time.toFixed(2)}ms ✅)`);
 }
 
-module.exports = proc;
+export default proc;
