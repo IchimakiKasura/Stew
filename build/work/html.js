@@ -6,7 +6,7 @@ import config from "../config.js";
 
 const regex = {
     stew: /\s*stew-mod\s*=\s*(["'])[\s\S]*?\1/gi,
-    stewMod: /<([a-z0-9]+)([^>]*\bstew-mod\s*=\s*["']\s*([\s\S]*?)\s*["'][^>]*)>([\s\S]*?)<\/\1>/gi,
+    stewMod: /<([a-z0-9]+)([^>]*\bstew-mod\s*=\s*["']\s*([\s\S]*?)\s*["'][^>]*?)(?:\/>|>([\s\S]*?)<\/\1>)/gi,
     linkRemove: /<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g,
     linkMinify: /(<link[^>]*href=["'])([^"']+)\.css(["'][^>]*>)/g,
     scriptMinify: /(<script[^>]*src=["'])([^"']+)\.js(["'][^>]*><\/script>)/g,
