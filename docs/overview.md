@@ -30,5 +30,5 @@ Production builds generate a deployable `dist/` directory containing optimized H
 
 ## Related Documentation
 
-* `modes.md` — Build modes.
-* `html-modifiers.md` — Build-time HTML attribute replacement.
+* [`modes.md`](./modes.md) — Build modes.
+* [`html-modifiers.md`](./html-modifiers.md) — Build-time HTML attribute replacement.

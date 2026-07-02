@@ -44,29 +44,30 @@ function applyStewModifiers(html) {
 }
 
 function rewriteHTML(html, rel) {
+
+    log(rel, `Rewriting *.css > *.min.css`);
     html = html.replace(regex.linkMinify, (_, a, file, b) => {
         if (file.endsWith('.min')) return _ ;
-
-        log(rel, `rewriting ${file}.css > ${file}.min.css`); 
         return `${a}${file}.min.css${b}`; 
     });
 
+    log(rel, `Rewriting *.js > *.min.js`);
     html = html.replace(regex.scriptMinify, (_, a, file, b) => {
-        log(rel, `rewriting ${file}.js > ${file}.min.js`);
         return `${a}${file}.min.js${b}`;
     });
 
     if (!config.mode.isDev) {
         const originalHtml = html;
 
+        log(rel, `Executing stew-modifiers on HTML...`);
         html = applyStewModifiers(html);
 
         html = html.replace(regex.linkRemove, "");
         if (html !== originalHtml) {
             html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
-            log(rel, `css bundle linked (replaced existing styles)`);
+            log(rel, `Css bundle linked (replaced existing styles)`);
         } else {
-            log(rel, `no css links found; skipping bundle injection`);
+            log(rel, `No css links found; skipping bundle injection`);
         }
     }
 
@@ -74,7 +75,7 @@ function rewriteHTML(html, rel) {
     // (enable this if your site is under another uri and not on root)
     if(config.flags.dotdir) {
         html = html.replace(regex.dotdir, "$1./");
-        log(rel, `relative index fixed`);
+        log(rel, `Applied relative indexed (--dotdir)`);
     }
     
     return html;

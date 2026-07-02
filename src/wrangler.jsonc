@@ -1,5 +1,4 @@
 {
-    "$schema": "node_modules/wrangler/config-schema.json",
     "name": "stewstack",
     "workers_dev": false,
     "compatibility_date": "2026-29-06",
@@ -12,5 +11,6 @@
     },
     "compatibility_flags": [
         "nodejs_compat"
-    ]
+    ],
+    "minify": true
 }

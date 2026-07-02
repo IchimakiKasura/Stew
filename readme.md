@@ -47,7 +47,7 @@ I purpose-built this template for developers who want to stick to raw HTML and C
 
 ### Docs
 
-- [HTML Modifiers (`stew-mod`)](docs/build/html-modifiers.md)
+- [Overview](docs/overview.md)
 
 ---
 
@@ -86,11 +86,13 @@ To run my custom esbuild compiler watcher alongside the active Cloudflare Wrangl
 npm run test:site
 ```
 
-#### Manual Serverless Sandboxing
-To launch just the Wrangler staging environment using local testing configs:
+#### Preivew Production build
+This will build and launch a live server of your site in a production settings.
+
+Though it lacks live reload but thats whats the `npm run test:site` for development :>
 
 ```bash
-npm run wrangler:dev
+npm run test:prod
 ```
 
 #### Available Build and Test Commands

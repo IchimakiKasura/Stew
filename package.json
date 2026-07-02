@@ -4,15 +4,21 @@
   "main": "build/index.js",
   "type": "module",
   "scripts": {
+    
     "build:dev": "tsc && node . --dev",
     "build:prod": "tsc && node . --prod",
     "build:prod-static": "tsc && node . --prod --dotdir",
     "build:test": "tsc && node . --test",
     "build:ts": "tsc",
+
     "ts:watch": "esbuild ts/*.ts --outdir=src/js --watch --log-level=silent",
+
     "wrangler:dev": "npx wrangler dev --local --live-reload",
+    "wrangler:prod": "npx wrangler dev api/localworker.js --name localserver --compatibility-date 2026-06-18 --port 5500 --local --assets ./dist",
+
     "test:ts": "npx tsc --noEmit --pretty false --diagnostics --extendedDiagnostics --listFiles --explainFiles --traceResolution 2>&1 | grep -v \"node_modules\"",
-    "test:site": "concurrently --kill-others --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:dev\""
+    "test:site": "concurrently --kill-others --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:dev\"",
+    "test:prod": "npm run build:prod && npm run wrangler:prod"
   },
   "devDependencies": {
     "clean-css": "^5.3.3",

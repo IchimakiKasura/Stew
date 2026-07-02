@@ -8,7 +8,7 @@ async function timeTaken(rel, fn, isCompiling) {
     if(isCompiling) log(rel, 'Minifying');
     const start = performance.now();
     await fn();
-    log(rel, `${config.mode.isTest ? "FINISHED" : "copied to dist"} (took ${(performance.now() - start).toFixed(2)}ms ✅)`);
+    log(rel, `${config.mode.isTest ? "FINISHED" : "Copied to dist"} (took ${(performance.now() - start).toFixed(2)}ms ✅)`);
 }
 
 async function navigate(dir) {
