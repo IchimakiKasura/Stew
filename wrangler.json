@@ -2,7 +2,7 @@
     "$schema": "node_modules/wrangler/config-schema.json",
 
     "name": "localserver",
-    "main": "worker/localworker.js",
+    "main": "api/localworker.js",
     "compatibility_date": "2026-06-18",
 
     "assets": {
@@ -17,5 +17,5 @@
 
     "dev": {
         "port": 5500
-    }
+    },
 }

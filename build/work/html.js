@@ -1,12 +1,30 @@
 import fs from "fs-extra";
 import * as htmlMinifier from "html-minifier-terser";
-import config, { isProd, isTest, dotdir } from "../config.js";
-import log from "../console.js"
+import config from "../config.js";
+
+// yes, I could use jsdom, but I like to torture myself with regex
+
+function applyStewModifiers(html) {
+    return html.replace(/(<([a-z0-9]+)[^>]*\bstew-mod\s*=\s*["']\s*([\s\S]*?)\s*["'][^>]*>)/gi, (fullTag, _, tagName, stewContent) => {
+        let updatedTag = fullTag, match;
+        const modRegex = /\[([^\]]+)\]\[([^\]]+)\]/g;
+        while ((match = modRegex.exec(stewContent)) !== null) {
+            const [_, attrName, newVal] = match;
+            const attrRegex = new RegExp(`(${attrName}\\s*=\\s*)(["'])(?:(?!\\2).)*\\2`, 'i');
+            if (attrRegex.test(updatedTag)) 
+                updatedTag = updatedTag.replace(attrRegex, `$1$2${newVal}$2`);
+        }
+        updatedTag = updatedTag.replace(/\s*stew-mod\s*=\s*(["'])[\s\S]*?\1/gi, '');
+        return updatedTag;
+    });
+}
 
 function rewriteHTML(html, rel) {
     html = html.replace(/(<link[^>]*href=["'])([^"']+)\.css(["'][^>]*>)/g, (_, a, file, b) => {
-        log(rel, `rewriting ${file}.css > ${file}.min.css`);
-        return `${a}${file}.min.css${b}`;
+    if (file.endsWith('.min')) return _ ;
+
+    log(rel, `rewriting ${file}.css > ${file}.min.css`); 
+    return `${a}${file}.min.css${b}`; 
     });
 
     html = html.replace(/(<script[^>]*src=["'])([^"']+)\.js(["'][^>]*><\/script>)/g, (_, a, file, b) => {
@@ -14,35 +32,36 @@ function rewriteHTML(html, rel) {
         return `${a}${file}.min.js${b}`;
     });
 
-    if (isProd || isTest) {
-        // removes stylesheets, bundle
+    if (!config.mode.isDev) {
+        const originalHtml = html;
         html = html.replace(/<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g, "");
-        html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
-        log(rel, `css bundle linked`);
+        if (html !== originalHtml) {
+            html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
+            log(rel, `css bundle linked (replaced existing styles)`);
+        } else {
+            log(rel, `no css links found; skipping bundle injection`);
+        }
     
-        // run custom replace for dev
-        // html = html.replace(/* regex */, /* replace */);
+        // run custom replace for dev to prod
+        html = applyStewModifiers(html);
     }
 
     // for dotdir option, changes "/" to "./" for relative dir
     // (enable this if your site is under another uri and not on root)
-    if(dotdir) {
+    if(config.flags.dotdir) {
         html = html.replace(/((?:href|src)=["']|url\["']?)(?!https?:|\/\/|#|mailto:|tel:|data:)\/?\/?/g, "$1./");
         log(rel, `relative index fixed`);
     }
     
-
     return html;
 }
 
-async function doWorkHTML(file, rel, out) {
-    const start = performance.now();
+async function compileHTML(file, rel, out) {
     let html = await fs.readFile(file, "utf8");
 
     html = rewriteHTML(html, rel);
 
     try {
-        log(rel, `Minifying`);
         html = await htmlMinifier.minify(html, {
             collapseWhitespace: true,
             removeComments: true,
@@ -50,9 +69,7 @@ async function doWorkHTML(file, rel, out) {
             minifyCSS: true,
             conservativeCollapse: true,
         });
-        if (!isTest) await fs.outputFile(out, html);
-        const time = performance.now() - start;
-        log(rel, `${isTest ? "FINISHED" : "copied to dist"} (took ${time.toFixed(2)}ms ✅)`);
+        if (!config.mode.isTest) await fs.outputFile(out, html);
     } catch (err) {
         config.errorCode = 1;
         log(rel, `Error occurs when minifying the file. ❌`);
@@ -60,4 +77,4 @@ async function doWorkHTML(file, rel, out) {
     }
 }
 
-export default doWorkHTML;
+export default compileHTML;

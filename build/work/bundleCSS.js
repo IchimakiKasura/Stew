@@ -1,13 +1,11 @@
 import fs from "fs-extra";
 import path from "node:path";
 import CleanCSS from "clean-css";
-import config, { SRC, DIST, isTest } from "../config.js";
-import log from "../console.js"
+import config from "../config.js";
 
 async function bundleCSS() {
-    const start = performance.now();
-    const cssDir = path.join(SRC, "css");
-    const bundleDir = path.join(DIST, "css", "bundle.min.css");
+    const cssDir = path.join(config.src, "css");
+    const bundleDir = path.join(config.dist, "css", "bundle.min.css");
 
     let bundle = "";
 
@@ -23,9 +21,7 @@ async function bundleCSS() {
     try {
         log('bundle.css', `Minifying (bundle.min.css)`);
         bundle = new CleanCSS({}).minify(bundle).styles;
-        if (!isTest) await fs.outputFile(bundleDir, bundle);
-        const end = performance.now() - start;
-        log(`bundle.min.css`, `${isTest ? "FINISHED" : "copied to dist"} (took ${end.toFixed(2)}ms ✅)`);
+        if (!config.mode.isTest) await fs.outputFile(bundleDir, bundle);
     } catch (err) {
         config.errorCode = 1;
         log(`bundle.min.css`, `Failed ❌ [${err}]`);
