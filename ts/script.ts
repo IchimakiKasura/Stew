@@ -1,7 +1,16 @@
+// this is a temporary variable, always include this on every script that includes you putting dev codes only.
+// All dev codes will be stripped out and this variable will be removed from the final build.
+const __DEV__ = true; 
+
 document.addEventListener("DOMContentLoaded", () => {
     const cookBtn = document.getElementById("cook-btn") as HTMLButtonElement | null;
     const terminalLog = document.getElementById("terminal-log") as HTMLElement | null;
     const copyText = document.getElementById("copy-text");
+        const SOCIAL_LINKS: Record<string, string> = {
+        dc: "https://discord.com/users/1515722036209520940",
+        gh: "https://github.com/IchimakiKasura",
+        gm: "malto:ichimakikasura@gmail.com"
+    };
 
     if (!cookBtn || !terminalLog || !copyText)  return;
 
@@ -71,17 +80,20 @@ document.addEventListener("DOMContentLoaded", () => {
             
             await new Promise((resolve) => setTimeout(resolve, 180));
         }
+        
+        const cursorLine = document.createElement("div");
+        cursorLine.className = "log-line";
+        const cursorSpan = document.createElement("span");
+        cursorSpan.className = "cursor";
+        cursorSpan.textContent = "_";
+        cursorLine.appendChild(cursorSpan);
+        terminalLog.appendChild(cursorLine);
+        terminalLog.scrollTop = terminalLog.scrollHeight;
 
         cooking = false;
         cookBtn.disabled = false;
         cookBtn.innerText = "Cook another Build";
     });
-
-    const SOCIAL_LINKS: Record<string, string> = {
-        dc: "https://discord.com/users/1515722036209520940",
-        gh: "https://github.com/IchimakiKasura",
-        gm: "malto:ichimakikasura@gmail.com"
-    };
 
     document.querySelectorAll<HTMLElement>("[data-social]").forEach((btn) => {
         btn.addEventListener("click", () => {

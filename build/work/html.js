@@ -4,52 +4,76 @@ import config from "../config.js";
 
 // yes, I could use jsdom, but I like to torture myself with regex
 
+const regex = {
+    stew: /\s*stew-mod\s*=\s*(["'])[\s\S]*?\1/gi,
+    stewMod: /<([a-z0-9]+)([^>]*\bstew-mod\s*=\s*["']\s*([\s\S]*?)\s*["'][^>]*)>([\s\S]*?)<\/\1>/gi,
+    linkRemove: /<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g,
+    linkMinify: /(<link[^>]*href=["'])([^"']+)\.css(["'][^>]*>)/g,
+    scriptMinify: /(<script[^>]*src=["'])([^"']+)\.js(["'][^>]*><\/script>)/g,
+    dotdir: /((?:href|src)=["']|url\["']?)(?!https?:|\/\/|#|mailto:|tel:|data:)\/?\/?/g
+}
+
 function applyStewModifiers(html) {
-    return html.replace(/(<([a-z0-9]+)[^>]*\bstew-mod\s*=\s*["']\s*([\s\S]*?)\s*["'][^>]*>)/gi, (fullTag, _, tagName, stewContent) => {
-        let updatedTag = fullTag, match;
-        const modRegex = /\[([^\]]+)\]\[([^\]]+)\]/g;
-        while ((match = modRegex.exec(stewContent)) !== null) {
-            const [_, attrName, newVal] = match;
-            const attrRegex = new RegExp(`(${attrName}\\s*=\\s*)(["'])(?:(?!\\2).)*\\2`, 'i');
-            if (attrRegex.test(updatedTag)) 
-                updatedTag = updatedTag.replace(attrRegex, `$1$2${newVal}$2`);
+    return html.replace(regex.stewMod, (fullElement, tagName, attributes, stewValue, innerHTML) => {
+        if (stewValue.includes('[remove][]'))  return '';
+    
+        let updatedAttributes = attributes;
+        let updatedInnerHTML = innerHTML;
+        let match;
+        
+        const modRegex = /\[([^\]]+)\]\[([^\]]*?)\]/g; 
+        
+        while ((match = modRegex.exec(stewValue)) !== null) {
+            const [_, key, newVal] = match;
+            if (key.toLowerCase() === 'textcontent')
+                updatedInnerHTML = newVal;
+            else {
+                const attrRegex = new RegExp(`\\s*${key}\\s*=\\s*(["'])(?:(?!\\1).)*\\1`, 'i');
+                
+                if (newVal === "") updatedAttributes = updatedAttributes.replace(attrRegex, '');
+                else if (attrRegex.test(updatedAttributes)) {
+                    const updatePattern = new RegExp(`(${key}\\s*=\\s*)(["'])(?:(?!\\2).)*\\2`, 'i');
+                    updatedAttributes = updatedAttributes.replace(updatePattern, `$1$2${newVal}$2`);
+                } else updatedAttributes += ` ${key}="${newVal}"`;
+            }
         }
-        updatedTag = updatedTag.replace(/\s*stew-mod\s*=\s*(["'])[\s\S]*?\1/gi, '');
-        return updatedTag;
+
+        updatedAttributes = updatedAttributes.replace(regex.stew, '');
+        return `<${tagName}${updatedAttributes}>${updatedInnerHTML}</${tagName}>`;
     });
 }
 
 function rewriteHTML(html, rel) {
-    html = html.replace(/(<link[^>]*href=["'])([^"']+)\.css(["'][^>]*>)/g, (_, a, file, b) => {
-    if (file.endsWith('.min')) return _ ;
+    html = html.replace(regex.linkMinify, (_, a, file, b) => {
+        if (file.endsWith('.min')) return _ ;
 
-    log(rel, `rewriting ${file}.css > ${file}.min.css`); 
-    return `${a}${file}.min.css${b}`; 
+        log(rel, `rewriting ${file}.css > ${file}.min.css`); 
+        return `${a}${file}.min.css${b}`; 
     });
 
-    html = html.replace(/(<script[^>]*src=["'])([^"']+)\.js(["'][^>]*><\/script>)/g, (_, a, file, b) => {
+    html = html.replace(regex.scriptMinify, (_, a, file, b) => {
         log(rel, `rewriting ${file}.js > ${file}.min.js`);
         return `${a}${file}.min.js${b}`;
     });
 
     if (!config.mode.isDev) {
         const originalHtml = html;
-        html = html.replace(/<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g, "");
+
+        html = applyStewModifiers(html);  
+
+        html = html.replace(regex.linkRemove, "");
         if (html !== originalHtml) {
             html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
             log(rel, `css bundle linked (replaced existing styles)`);
         } else {
             log(rel, `no css links found; skipping bundle injection`);
         }
-    
-        // run custom replace for dev to prod
-        html = applyStewModifiers(html);
     }
 
     // for dotdir option, changes "/" to "./" for relative dir
     // (enable this if your site is under another uri and not on root)
     if(config.flags.dotdir) {
-        html = html.replace(/((?:href|src)=["']|url\["']?)(?!https?:|\/\/|#|mailto:|tel:|data:)\/?\/?/g, "$1./");
+        html = html.replace(regex.dotdir, "$1./");
         log(rel, `relative index fixed`);
     }
     

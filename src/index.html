@@ -28,25 +28,26 @@
         <link rel="stylesheet" href="/css/styles.css">
         <link rel="stylesheet" href="/css/footer.css">
         <link rel="stylesheet" href="/css/stew.css">
+        <script type="module" src="/js/script.js" defer></script>
     </head>
     <body>
 
         <header class="navbar">
             <div class="logo">STEW<span>.js</span></div>
             <nav>
-                <a href="https://github.com/IchimakiKasura/Stew" target="_blank" class="nav-link">Repository</a>
+                <a href="/" stew-mod="[href][https://ichimakikasura.github.io/Stew]" target="_blank" class="nav-link">Repository</a>
             </nav>
         </header>
 
         <main class="hero-container">
             <section class="hero-text">
-                <div class="badge">Pure web. Zero bloat. My Way</div>
+                <div class="badge" stew-mod="[textcontent][Pure web. Zero bloat. My Way]">Hello, user!</div>
                 <h1>The Edge-Native Stack for <span>Raw Web Standards</span></h1>
                 <p>A purpose-built starter template for devs who want basic HTML and CSS backed by type-safe JS. No complicated abstractions. No tooling bloat. Brutally fast execution.</p>
                 
                 <div class="cta-group">
                     <button id="cook-btn" class="btn btn-primary">Cook a Build</button>
-                    <button class="copy-cmd" id="copy-text">git clone stew</button>
+                    <button class="copy-cmd" id="copy-text" style="display:none;" stew-mod="[style][]">git clone stew</button>
                 </div>
             </section>
 
@@ -59,14 +60,62 @@
                         <span class="terminal-title">stew-compiler — bash</span>
                     </div>
                     <div class="terminal-body" id="terminal-log">
-                        <div class="log-line text-muted">// Click "Cook a Build" to fire the pipeline...</div>
+                        <div class="log-line text-muted"># Click "Cook a Build" to fire the pipeline...</div>
+                        <div class="log-line"><span class="cursor">_</span></div>
                     </div>
                 </div>
             </section>
         </main>
 
+        <section class="utility-section" style="display:none;" stew-mode="[style][]">
+            <div class="section-grid">
+                <!-- HTML Modifiers Box -->
+                <div class="mod-card-v2">
+                    <div class="mod-content">
+                        <span class="mod-tag">HTML Utility</span>
+                        <h3>stew-mod</h3>
+                        <p>Modify attributes or update text content before final emission. The compiler evaluation strips the attribute for zero production overhead.</p>
+                    </div>
+                    <div class="mod-example-box">
+                        <div class="terminal-header">
+                            <span class="dot red"></span>
+                            <span class="terminal-title">index.html</span>
+                        </div>
+                        <pre><code><span class="token-comment">&lt;!-- Source --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-string">"box"</span> 
+    <span class="token-mod">stew-mod</span>=<span class="token-string">"[class][active]"</span>&gt;
+&lt;/<span class="token-tag">div</span>&gt;
+
+<span class="token-comment">&lt;!-- Result --&gt;</span>
+&lt;<span class="token-tag">div</span> <span class="token-attr">class</span>=<span class="token-string">"active"</span>&gt;&lt;/<span class="token-tag">div</span>&gt;</code></pre>
+                    </div>
+                </div>
+
+                <!-- TypeScript Modifiers Box -->
+                <div class="mod-card-v2">
+                    <div class="mod-content">
+                        <span class="mod-tag">TS Strategy</span>
+                        <h3>__DEV__</h3>
+                        <p>Include development-only code that is disabled in production. Terser evaluates the constant and tree-shakes unreachable branches.</p>
+                    </div>
+                    <div class="mod-example-box">
+                        <div class="terminal-header">
+                            <span class="dot yellow"></span>
+                            <span class="terminal-title">script.ts</span>
+                        </div>
+                        <pre><code><span class="token-comment">// Source</span>
+<span class="token-keyword">const</span> <span class="token-const">__DEV__</span> = <span class="token-boolean">true</span>;
+
+<span class="token-keyword">if</span> (<span class="token-const">__DEV__</span>) {
+    <span class="token-tag">console</span>.log(<span class="token-string">"Debug Mode"</span>);
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Yes, I used emojis lmao -->
-        <section class="features-grid">
+        <section class="section-grid">
             <div class="card">
                 <div class="card-icon">⚡</div>
                 <h3>Serverless</h3>
@@ -106,8 +155,5 @@
                 Created on <a href="https://ichimakikasura.github.io/Stew/" title="Stew" class="stew" rel="noopener">Stew</a>
             </div>
         </footer>
-
-        <!-- Essential ESM Script Delivery -->
-        <script type="module" src="/js/script.js"></script>
     </body>
 </html>

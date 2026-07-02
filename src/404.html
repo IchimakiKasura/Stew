@@ -3,13 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="https://ichimakikasura.github.io/Stew/favicon.ico" type="image/x-icon">
         <title>404 — Ingredient Not Found</title>
-        <!-- I'm using gh-pages so directories can be a bit messy, why not hard code the already uploaded file -->
-        <link rel="stylesheet" href="https://ichimakikasura.github.io/Stew/css/bundle.min.css" />
+        <base href="/" stew-mod="[href][/Stew/]" />
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/footer.css">
+        <link rel="stylesheet" href="/css/stew.css">
     </head>
     <body class="error-page">
         <header class="navbar">
-        <a href="/" class="logo" stew-mod="[href][https://ichimakikasura.github.io/Stew]">🍲 STEW<span>.js</span></a>
+            <div class="logo">STEW<span>.js</span></div>
+            <nav>
+                <a href="/" target="_blank" class="nav-link">Repository</a>
+            </nav>
         </header>
 
         <main class="hero-container error-hero">
@@ -22,7 +28,7 @@
             </p>
 
             <div class="cta-group">
-            <a href="/" stew-mod="[href][https://ichimakikasura.github.io/Stew]" class="btn btn-primary">Back to Kitchen</a>
+            <a href="/" class="btn btn-primary">Back to Kitchen</a>
             <code class="copy-cmd">cd ../root</code>
             </div>
         </section>
@@ -36,15 +42,11 @@
                 <span class="terminal-title">stew-runtime — error</span>
             </div>
             <div class="terminal-body">
-                <div class="log-line text-orange">
-                [RUNTIME] GET /unknown-resource
-                </div>
+                <div class="log-line text-orange">[RUNTIME] GET /unknown-resource</div>
                 <div class="log-line text-muted">Searching edge nodes...</div>
                 <div class="log-line text-muted">Checking D1 database...</div>
                 <div class="log-line text-muted">Checking KV storage...</div>
-                <div class="log-line text-red">
-                [FATAL] 404: Resource not found.
-                </div>
+                <div class="log-line text-red">[FATAL] 404: Resource not found.</div>
                 <div class="log-line"><span class="cursor">_</span></div>
             </div>
             </div>
@@ -65,7 +67,7 @@
                 <div>© 2026 Ichimaki | Manila, Philippines</div>
             </div>
             <div class="footer-right">
-                Powered by <a href="/" title="Stew" rel="noopener" stew-mod="[href][https://ichimakikasura.github.io/Stew]">Stew</a>
+                Created on <a href="https://ichimakikasura.github.io/Stew/" title="Stew" class="stew" rel="noopener">Stew</a>
             </div>
         </footer>
     </body>
