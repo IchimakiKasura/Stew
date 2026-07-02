@@ -10,26 +10,25 @@ const regex = {
     linkRemove: /<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g,
     linkMinify: /(<link[^>]*href=["'])([^"']+)\.css(["'][^>]*>)/g,
     scriptMinify: /(<script[^>]*src=["'])([^"']+)\.js(["'][^>]*><\/script>)/g,
-    dotdir: /((?:href|src)=["']|url\["']?)(?!https?:|\/\/|#|mailto:|tel:|data:)\/?\/?/g
+    dotdir: /(?<!<base\s)((?:href|src)=["'])\(?["']?(?!https?:|#|mailto:|tel:|data:)\/?/g
 }
 
 function applyStewModifiers(html) {
     return html.replace(regex.stewMod, (fullElement, tagName, attributes, stewValue, innerHTML) => {
-        if (stewValue.includes('[remove][]'))  return '';
-    
+        if (stewValue.includes('[remove][]')) return '';
+        const selfClosing = fullElement.endsWith('/>');
         let updatedAttributes = attributes;
-        let updatedInnerHTML = innerHTML;
+        let updatedInnerHTML = innerHTML ?? "";
         let match;
-        
-        const modRegex = /\[([^\]]+)\]\[([^\]]*?)\]/g; 
-        
+        const modRegex = /\[([^\]]+)\]\[([^\]]*?)\]/g;
         while ((match = modRegex.exec(stewValue)) !== null) {
             const [_, key, newVal] = match;
-            if (key.toLowerCase() === 'textcontent')
+
+            if (key.toLowerCase() === 'textcontent') {
                 updatedInnerHTML = newVal;
-            else {
+            } else {
                 const attrRegex = new RegExp(`\\s*${key}\\s*=\\s*(["'])(?:(?!\\1).)*\\1`, 'i');
-                
+
                 if (newVal === "") updatedAttributes = updatedAttributes.replace(attrRegex, '');
                 else if (attrRegex.test(updatedAttributes)) {
                     const updatePattern = new RegExp(`(${key}\\s*=\\s*)(["'])(?:(?!\\2).)*\\2`, 'i');
@@ -39,6 +38,7 @@ function applyStewModifiers(html) {
         }
 
         updatedAttributes = updatedAttributes.replace(regex.stew, '');
+        if (selfClosing) return `<${tagName}${updatedAttributes} />`;
         return `<${tagName}${updatedAttributes}>${updatedInnerHTML}</${tagName}>`;
     });
 }
@@ -59,7 +59,7 @@ function rewriteHTML(html, rel) {
     if (!config.mode.isDev) {
         const originalHtml = html;
 
-        html = applyStewModifiers(html);  
+        html = applyStewModifiers(html);
 
         html = html.replace(regex.linkRemove, "");
         if (html !== originalHtml) {
