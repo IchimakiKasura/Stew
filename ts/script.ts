@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const steps: BuildStep[] = [
-        { prefixText: ">", prefixClass: "text-white", logText: " StewJS@1.0 build:prod" },
+        { prefixText: ">", prefixClass: "text-white", logText: " StewJS@1.0: npm run build:prod" },
         { prefixText: "[SYSTEM]", prefixClass: "text-white", logText: " Build start" },
         { prefixText: "[SYSTEM]", prefixClass: "text-white", logText: " Removing old files from dist/" },
         { prefixText: "[JavaScript]", prefixClass: "text-yellow", logText: " script.js -> Stripping development blocks..." },

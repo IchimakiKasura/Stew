@@ -12,9 +12,9 @@ I purpose-built this template for developers who want to stick to raw HTML and C
 
 **Live Landing Page:** Check out the interactive demo page at [ichimakikasura.github.io/Stew/](https://ichimakikasura.github.io/Stew/)
 
-> **Note:** This stack is built entirely on my own preferences. It works exactly how I like to build, skipping the heavy setup and keeping things brutally fast. Feel free to tweak it, tear it apart, or modify it your own way.
+> **Note:** This stack is built entirely on my own preferences. It works exactly how I like to build, skipping the heavy setup and keeping things simple. Feel free to tweak it, tear it apart, or modify it your own way.
 >
-> **Contributions:** No pull requests or issues will be accepted. As I mentioned above, if you want changes, you can fork it and modify it your own way.
+> **Contributions:** No issues will be accepted. As I mentioned above, if you want changes, you can fork it and modify it your own way. Pull request suggestions might be.
 
 ---
 
