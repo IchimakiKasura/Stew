@@ -27,3 +27,15 @@ footer {
     fill: var(--primary);
     opacity: 1;
 }
+
+@media (max-width: 500px) {
+    footer {
+        display: block;
+    }
+    .footer-left {
+        display: block
+    }
+    .footer-right {
+        padding-top: 20px;
+    }
+}

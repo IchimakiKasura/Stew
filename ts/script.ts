@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cookBtn = document.getElementById("cook-btn") as HTMLButtonElement | null;
     const terminalLog = document.getElementById("terminal-log") as HTMLElement | null;
     const copyText = document.getElementById("copy-text");
-        const SOCIAL_LINKS: Record<string, string> = {
+    const SOCIAL_LINKS: Record<string, string> = {
         dc: "https://discord.com/users/1515722036209520940",
         gh: "https://github.com/IchimakiKasura",
         gm: "malto:ichimakikasura@gmail.com"
