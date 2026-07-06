@@ -4,7 +4,7 @@
 
 # STEW Starter
 
-A minimal, high-performance project template built on my STEW stack.
+A minimal, high-performance project template built on my STEW.
 
 I purpose-built this template for developers who want to stick to raw HTML and CSS, backed by the reliability of type-safe JavaScript, without dealing with complex frameworks or bloated tooling.
 
@@ -12,18 +12,9 @@ I purpose-built this template for developers who want to stick to raw HTML and C
 
 **Live Landing Page:** Check out the interactive demo page at [ichimakikasura.github.io/Stew/](https://ichimakikasura.github.io/Stew/)
 
-> **Note:** This stack is built entirely on my own preferences. It works exactly how I like to build, skipping the heavy setup and keeping things simple. Feel free to tweak it, tear it apart, or modify it your own way.
+> **Note:** This build tool is built entirely on my own preferences. It works exactly how I like to build, skipping the heavy setup and keeping things simple. Feel free to tweak it, tear it apart, or modify it your own way.
 >
 > **Contributions:** No issues will be accepted. As I mentioned above, if you want changes, you can fork it and modify it your own way. Pull request suggestions might be.
-
----
-
-## The STEW Stack
-
-- **S**erverless — Zero server management.
-- **T**ypeScript — Type-safe client-side logic.
-- **E**dge — Backend logic executes globally.
-- **W**eb — Built with raw web standards.
 
 ---
 
@@ -79,7 +70,7 @@ npm install
 
 I included several custom utility pipelines depending on your development workflow:
 
-#### Full Stack Integration Test
+#### Full Integration Test
 To run my custom esbuild compiler watcher alongside the active Cloudflare Wrangler emulator concurrently:
 
 ```bash

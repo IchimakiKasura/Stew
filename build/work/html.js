@@ -53,6 +53,7 @@ function rewriteHTML(html, rel) {
 
     log(rel, `Rewriting *.js > *.min.js`);
     html = html.replace(regex.scriptMinify, (_, a, file, b) => {
+        if (file.endsWith('.min')) return _ ;
         return `${a}${file}.min.js${b}`;
     });
 
