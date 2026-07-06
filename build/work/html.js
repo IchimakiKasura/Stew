@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import path from "node:path"
 import * as htmlMinifier from "html-minifier-terser";
 import config from "../config.js";
 
@@ -7,7 +8,7 @@ import config from "../config.js";
 const regex = {
     stew: /\s*stew-mod\s*=\s*(["'])[\s\S]*?\1/gi,
     stewMod: /<([a-z0-9]+)([^>]*\bstew-mod\s*=\s*["']\s*([\s\S]*?)\s*["'][^>]*?)(?:\/>|>([\s\S]*?)<\/\1>)/gi,
-    linkRemove: /<link[^>]*href=["'](?:\/|\.\/)[^"']+\.css["'][^>]*>\s*/g,
+    linkRemove: /<link[^>]*href=["'](?!(?:https?|data|#):)[^"']+\.css["'][^>]*>\s*/gi,
     linkMinify: /(<link[^>]*href=["'])([^"']+)\.css(["'][^>]*>)/g,
     scriptMinify: /(<script[^>]*src=["'])([^"']+)\.js(["'][^>]*><\/script>)/g,
     dotdir: /(?<!<base\s)((?:href|src)=["'])\(?["']?(?!https?:|#|mailto:|tel:|data:)\/?/g
@@ -44,37 +45,39 @@ function applyStewModifiers(html) {
 }
 
 function rewriteHTML(html, rel) {
-
     log(rel, `Rewriting *.css > *.min.css`);
     html = html.replace(regex.linkMinify, (_, a, file, b) => {
-        if (file.endsWith('.min')) return _ ;
+        if (file.endsWith('.min') || file.endsWith('.mini')) return _;
         return `${a}${file}.min.css${b}`; 
     });
 
     log(rel, `Rewriting *.js > *.min.js`);
     html = html.replace(regex.scriptMinify, (_, a, file, b) => {
-        if (file.endsWith('.min')) return _ ;
+        if (file.endsWith('.min') || file.endsWith('.mini')) return _;
         return `${a}${file}.min.js${b}`;
     });
 
     if (!config.mode.isDev) {
         const originalHtml = html;
 
+        const folderMatch = html.match(/href=["'](?!(?:https?|data|#):)([^"']+)\/[^"']+\.css["']/i);
+        const cssFolder = folderMatch ? folderMatch[1] : "css";
+
         log(rel, `Executing stew-modifiers on HTML...`);
         html = applyStewModifiers(html);
 
         html = html.replace(regex.linkRemove, "");
+
         if (html !== originalHtml) {
-            html = html.replace("</head>", '<link rel="stylesheet" href="/css/bundle.min.css" defer></head>');
-            log(rel, `Css bundle linked (replaced existing styles)`);
+            const bundlePath = `${cssFolder}/bundle.min.css`;
+            html = html.replace("</head>", `<link rel="stylesheet" href="${bundlePath}" defer></head>`);
+            log(rel, `Css bundle linked (${bundlePath})`);
         } else {
             log(rel, `No css links found; skipping bundle injection`);
         }
     }
 
-    // for dotdir option, changes "/" to "./" for relative dir
-    // (enable this if your site is under another uri and not on root)
-    if(config.flags.dotdir) {
+    if (config.flags.dotdir) {
         html = html.replace(regex.dotdir, "$1./");
         log(rel, `Applied relative indexed (--dotdir)`);
     }
