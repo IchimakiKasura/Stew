@@ -26,11 +26,11 @@ I purpose-built this template for developers who want to stick to raw HTML and C
 │   └── wrangler.jsonc  # Edge deployment configuration
 ├── ts/                 # Client-side TypeScript logic
 ├── api/                # Worker entrypoints
-│   ├── localworker.js  # For Development/Tests
 │   └── worker.js       # For production/live
 ├── package.json
 ├── tsconfig.json
-├── wrangler.json       # Local/Testing stage configuration
+├── wrangler.dev.json   # Local/Testing stage configuration
+├── wrangler.prod.json  # Production test configuration
 └── readme.md
 ```
 
@@ -69,10 +69,11 @@ npm run test:prod
 ```
 
 #### Available Build and Test Commands
-- `npm run build:test` — Compile TypeScript and execute the builder in test mode.
-- `npm run build:ts` — Run the raw TypeScript compiler.
-- `npm run ts:watch` — Use esbuild to watch and bundle client script changes directly into `src/js/`.
-- `npm run test:ts` — Run a deep, verbose diagnostic check on your TypeScript configurations.
+- `npm run build:test`  — Compile TypeScript and execute the builder in test mode.
+- `npm run build:ts`    — Run the raw TypeScript compiler.
+- `npm run ts:watch`    — Use esbuild to watch and bundle client script changes directly into `src/js/`.
+- `npm run test:ts`     — Run a deep, verbose diagnostic check on your TypeScript configurations.
+- `npm run update:stew` — Updates the `build` folder only.
 
 ---
 

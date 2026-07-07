@@ -18,11 +18,14 @@
 
     "test:ts": "npx tsc --noEmit --pretty false --diagnostics --extendedDiagnostics --listFiles --explainFiles --traceResolution 2>&1 | grep -v \"node_modules\"",
     "test:site": "concurrently --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:dev\"",
-    "test:prod": "concurrently --names \"STEWJS,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run build:prod\" \"npm run wrangler:prod\""
+    "test:prod": "concurrently --names \"STEWJS,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run build:prod\" \"npm run wrangler:prod\"",
+
+    "update:stew": "degit IchimakiKasura/Stew/build ./build --force"
   },
   "devDependencies": {
     "clean-css": "^5.3.3",
     "concurrently": "^10.0.3",
+    "degit": "^3.4.7",
     "dotenv": "^17.4.2",
     "esbuild": "^0.28.1",
     "fs-extra": "^11.3.5",
