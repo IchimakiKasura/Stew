@@ -12,7 +12,7 @@ All thanks to [regex101](https://regex101.com)
 
 ### 🔵 Live Production Build (`npm run build:prod`)
 Runs the same deep optimization process as the development build, with a major performance upgrade for the layout:
-*   **Automated Recursive Bundling:** Automatically crawls the project to find every `css`, `style`, or `styles` folder. Each directory is bundled independently into a `bundle.min.css` to keep sub-sites (like `/cosplay/`) completely separate.
+*   **Automated Recursive Bundling:** Automatically crawls the project to find every `css`, `style`, or `styles` folder. Each directory is bundled independently into a `bundle.min.css` to keep sub-sites completely separate.
 *   **Smart HTML Refactoring:** 
     *   **Context Discovery:** Scans existing `<link>` tags to identify if the page uses `css/` or `styles/` before stripping them.
     *   **Link Purging:** Uses non-destructive regex to remove all local stylesheets while preserving external CDN links.
