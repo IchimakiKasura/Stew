@@ -1,7 +1,7 @@
 {
-    "name": "stewstack",
+    "name": "stew",
     "workers_dev": false,
-    "compatibility_date": "2026-29-06",
+    "compatibility_date": "2026-06-18",
     "observability": {
         "enabled": true
     },
