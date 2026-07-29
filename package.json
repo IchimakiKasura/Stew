@@ -15,11 +15,13 @@
 
     "wrangler:dev": "npx wrangler dev --config wrangler.dev.json --local --remote=false --live-reload",
     "wrangler:prod": "npx wrangler dev --config wrangler.prod.json --local --remote=false --live-reload",
+    "wrangler:src": "npx wrangler dev --config wrangler.site.json --local --remote=false --live-reload",
 
     "test:ts": "npx tsc --noEmit --pretty false --diagnostics --extendedDiagnostics --listFiles --explainFiles --traceResolution 2>&1 | grep -v \"node_modules\"",
-    "test:site": "concurrently --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:dev\"",
+    "test:site": "concurrently --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:src\"",
+    "test:dev": "concurrently --names \"ESBUILD,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run ts:watch\" \"npm run wrangler:dev\"",
     "test:prod": "concurrently --names \"STEWJS,WRANGLER\" --prefix-colors \"cyan,#FF6600\" \"npm run build:prod\" \"npm run wrangler:prod\"",
-
+    
     "update:stew": "degit IchimakiKasura/Stew/build ./build --force"
   },
   "devDependencies": {

@@ -2,15 +2,22 @@
     "name": "stew",
     "workers_dev": false,
     "compatibility_date": "2026-06-18",
-    "observability": {
-        "enabled": true
-    },
+
     "assets": {
-        "directory": ".",
+        "directory": "src/",
         "not_found_handling": "404-page"
     },
     "compatibility_flags": [
         "nodejs_compat"
     ],
+
+    "observability": {
+        "enabled": true
+    },
+
+    "dev": {
+        "port": 5500
+    },
+
     "minify": true
 }

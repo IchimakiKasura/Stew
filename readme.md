@@ -56,7 +56,7 @@ I included several custom utility pipelines depending on your development workfl
 To run my custom esbuild compiler watcher alongside the active Cloudflare Wrangler emulator concurrently:
 
 ```bash
-npm run test:site
+npm run test:dev
 ```
 
 #### Preivew Production build
@@ -69,6 +69,7 @@ npm run test:prod
 ```
 
 #### Available Build and Test Commands
+- `npm run test:site`   — Initiates the site without the `api` integration.
 - `npm run build:test`  — Compile TypeScript and execute the builder in test mode.
 - `npm run build:ts`    — Run the raw TypeScript compiler.
 - `npm run ts:watch`    — Use esbuild to watch and bundle client script changes directly into `src/js/`.
